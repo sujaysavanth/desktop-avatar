@@ -1,0 +1,17 @@
+# Phase 0 — websocket stub
+websockets>=12.0
+
+# Phase 1 — LLM (uncomment when you reach it)
+# pydantic>=2.0
+# pydantic-ai>=0.0.13
+# openai>=1.0            # Ollama's OpenAI-compatible client
+
+# Phase 2 — RAG memory
+# chromadb>=0.5
+# (embeddings run via Ollama; no extra pkg)
+
+# Phase 3 — Job agent / web automation
+# playwright>=1.44
+
+# Phase 5 — orchestrator
+# langgraph>=0.2

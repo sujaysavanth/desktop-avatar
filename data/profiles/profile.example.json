@@ -1,0 +1,17 @@
+{
+  "full_name": "Your Name",
+  "email": "you@example.com",
+  "phone": "+1 555 555 5555",
+  "location": "Phoenix, AZ",
+  "linkedin": "https://linkedin.com/in/you",
+  "github": "https://github.com/you",
+  "years_experience": 4,
+  "current_title": "Data Engineer",
+  "summary": "Short professional summary the agent can draw on for open-text questions.",
+  "skills": ["Python", "SQL", "Spark"],
+  "work_authorization": "US Citizen",
+  "screening_answers": {
+    "willing_to_relocate": "Open to relocation for the right role.",
+    "start_date": "Two weeks from offer."
+  }
+}

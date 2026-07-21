@@ -1,0 +1,41 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Node / Electron ---
+node_modules/
+dist/
+out/
+*.log
+npm-debug.log*
+
+# --- Runtime data (private — never commit your resume, DB, logs) ---
+data/profiles/*
+!data/profiles/.gitkeep
+!data/profiles/profile.example.json
+data/vector_store/*
+!data/vector_store/.gitkeep
+data/behavior_log/*
+!data/behavior_log/.gitkeep
+
+# --- Playwright ---
+playwright-report/
+test-results/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# --- Secrets ---
+.env
+.env.local
