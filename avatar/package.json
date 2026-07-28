@@ -4,7 +4,8 @@
   "description": "Phase 0 avatar shell — transparent always-on-top Live2D-ready character window",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "node scripts/start.js",
+    "start:direct": "electron ."
   },
   "devDependencies": {
     "electron": "^32.0.0"

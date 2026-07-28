@@ -2,60 +2,45 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <!-- Everything is local now (the rig replaced the CDN-loaded Live2D), so we
+         can lock this down properly and silence Electron's CSP warning. -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src ws://127.0.0.1:8765" />
     <title>desk-avatar</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- top strip: drag handle + quit. Only this strip is draggable. -->
-    <div id="topbar">
-      <div id="drag" title="drag me">⠿</div>
-      <div id="state-dot" class="idle" title="idle"></div>
-      <button id="quit" title="quit">✕</button>
-    </div>
+    <!-- #world spans every display. Nothing in here is visible except the
+         character itself — the rest of the window is transparent and click-through. -->
+    <div id="world">
+      <!-- #avatar is exactly the character's box. Its size is set from the loaded
+           character definition, and it carries both the position translate and
+           the surface rotation (90° on a wall, 180° on the ceiling). -->
+      <div id="avatar">
+        <!-- speech + chat stack upward from above the head -->
+        <div id="panel">
+          <div id="bubble" class="hidden"></div>
+          <div id="chat" class="hidden">
+            <input id="msg" type="text" placeholder="talk to me…" autocomplete="off" />
+            <button id="send" title="send">➤</button>
+            <button id="quit" title="quit (Ctrl+Alt+Q)">✕</button>
+          </div>
+        </div>
 
-    <!-- the character. Live2D renders into the canvas; if no model loads,
-         the placeholder SVG shows instead. -->
-    <div id="stage">
-      <canvas id="live2d"></canvas>
-      <div id="placeholder">
-        <!-- simple drawn anime-ish placeholder so the window is never empty -->
-        <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
-          <!-- hair back -->
-          <path d="M40 120 Q30 40 100 30 Q170 40 160 120 L160 170 Q100 150 40 170 Z" fill="#6c5ce7"/>
-          <!-- face -->
-          <ellipse cx="100" cy="120" rx="52" ry="58" fill="#ffe0c7"/>
-          <!-- hair front / bangs -->
-          <path d="M48 108 Q60 60 100 58 Q140 60 152 108 Q140 92 118 96 Q110 78 100 80 Q90 78 82 96 Q60 92 48 108 Z" fill="#7d6cf0"/>
-          <!-- eyes -->
-          <g id="eyes">
-            <ellipse cx="80" cy="124" rx="9" ry="12" fill="#2d2d44"/>
-            <ellipse cx="120" cy="124" rx="9" ry="12" fill="#2d2d44"/>
-            <circle cx="83" cy="120" r="3" fill="#fff"/>
-            <circle cx="123" cy="120" r="3" fill="#fff"/>
-          </g>
-          <!-- blush -->
-          <ellipse cx="66" cy="140" rx="8" ry="4" fill="#ffb3ba" opacity="0.7"/>
-          <ellipse cx="134" cy="140" rx="8" ry="4" fill="#ffb3ba" opacity="0.7"/>
-          <!-- mouth -->
-          <path id="mouth" d="M90 150 Q100 158 110 150" stroke="#c0607a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        </svg>
+        <span id="state-dot" class="idle" title="idle"></span>
+
+        <!-- The rig is injected by character.js from the chosen definition in
+             characters/. Empty on purpose — nothing here is character-specific. -->
+        <svg id="char" xmlns="http://www.w3.org/2000/svg"></svg>
       </div>
     </div>
 
-    <!-- speech bubble: shows replies -->
-    <div id="bubble" class="hidden"></div>
+    <!-- character definitions must register before the driver loads one -->
+    <script src="characters/chibi.js"></script>
+    <script src="characters/spider.js"></script>
 
-    <!-- input row -->
-    <div id="inputrow">
-      <input id="msg" type="text" placeholder="talk to me…" autocomplete="off" />
-      <button id="send">➤</button>
-    </div>
-
-    <!-- PIXI + Live2D from CDN. If offline/absent, the app still runs with the
-         placeholder — see renderer.js. -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.10/browser/pixi.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/dist/index.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
+    <script src="character.js"></script>
+    <script src="behavior.js"></script>
     <script src="renderer.js"></script>
   </body>
 </html>
