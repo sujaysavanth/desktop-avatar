@@ -1,10 +1,14 @@
 # Phase 0 — websocket stub
 websockets>=12.0
 
-# Phase 1 — LLM (uncomment when you reach it)
+# Phase 1 — LLM
+# We talk to Ollama's native /api/chat over plain async HTTP, so no SDK is
+# needed. `openai` is deliberately NOT here: its endpoint (/v1) silently drops
+# keep_alive, which we rely on to keep the model resident in VRAM.
+httpx>=0.27
+
+# Phase 3+ — structured tool arguments (uncomment when you reach it)
 # pydantic>=2.0
-# pydantic-ai>=0.0.13
-# openai>=1.0            # Ollama's OpenAI-compatible client
 
 # Phase 2 — RAG memory
 # chromadb>=0.5
