@@ -1,0 +1,12 @@
+{
+  "name": "desk-avatar",
+  "version": "0.1.0",
+  "description": "Phase 0 avatar shell — transparent always-on-top Live2D-ready character window",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^32.0.0"
+  }
+}

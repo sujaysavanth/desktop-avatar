@@ -1,0 +1,115 @@
+/* Transparent everywhere so only the character + UI chrome show on the desktop. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  user-select: none;
+}
+
+/* --- top bar: the only draggable region --- */
+#topbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 6px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+body:hover #topbar { opacity: 1; }
+
+#drag {
+  -webkit-app-region: drag;   /* makes this element move the window */
+  cursor: grab;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  font-size: 14px;
+  flex: 1;
+}
+
+#state-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+}
+#state-dot.idle     { background: #8a8a9a; }
+#state-dot.thinking { background: #f9c74f; animation: pulse 1s infinite; }
+#state-dot.needs-you{ background: #f9484a; animation: pulse 0.6s infinite; }
+@keyframes pulse { 50% { opacity: 0.3; } }
+
+#quit {
+  -webkit-app-region: no-drag;
+  background: transparent; border: none; cursor: pointer;
+  color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  font-size: 12px; line-height: 1;
+}
+
+/* --- character stage --- */
+#stage {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#live2d { width: 100%; height: 100%; }
+#placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 10px;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
+}
+#placeholder svg { height: 300px; }
+#placeholder.hidden { display: none; }
+
+/* subtle idle bob on the placeholder */
+#placeholder svg { animation: bob 3.2s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-6px); } }
+
+/* --- speech bubble --- */
+#bubble {
+  margin: 4px 14px 8px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.96);
+  border-radius: 14px 14px 14px 4px;
+  font-size: 13px;
+  color: #222;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  max-height: 90px;
+  overflow-y: auto;
+  line-height: 1.4;
+}
+#bubble.hidden { display: none; }
+
+/* --- input row --- */
+#inputrow {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px 12px;
+  -webkit-app-region: no-drag;
+}
+#msg {
+  flex: 1;
+  border: none;
+  border-radius: 18px;
+  padding: 9px 14px;
+  font-size: 13px;
+  background: rgba(255,255,255,0.95);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+#send {
+  border: none;
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  background: #6c5ce7;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+#send:active { transform: scale(0.92); }
